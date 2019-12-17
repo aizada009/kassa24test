@@ -6,21 +6,30 @@
   </head>
   <body>
     <div class="container" id="app">
-        <h3 class="text-center"> Даннные с API</h3>
+        <h3 class="text-center"> Datas</h3>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Created Data</th>
-                    <th scope="col">Text</th>
+                    <th>#</th>
+                    <th>Id</th>
+                    <th>Avatar</th>
+                    <th>Created Data</th>
+                    <th>Text</th>
+                    <th>Title</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="result in results">
+                <tr v-for="(result, index) in results" v-bind:index="index">
+                     <td>{{index+1}}</td>
                      <td>{{result.id}}</td>
+                     <td>image</td>
                      <td>{{result.createdAt}}</td>
                      <td>{{ result.text }}</td>
-
+                     <td>{{ result.title }}</td>
+                     <td>
+                         <button style="font-size:13px; color: red;" type="button" class="btn btn-danger" @click="deleteData(index)"> X
+                         </button>
+                     </td>
                 </tr>
             </tbody>
         </table>
