@@ -3,12 +3,42 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-      
-    </div>
-    <router-view/>
+      </div>
+      <div id="nav">
+            <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
+        </div>
+        <router-view @authenticated="setAuthenticated" />
+    
   </div>
 </template>
 
+<script>
+    export default {
+        name: 'App',
+        data() {
+            return {
+                authenticated: false,
+                mockAccount: {
+                    username: "user",
+                    password: "user"
+                }
+            }
+        },
+        mounted() {
+            if(!this.authenticated) {
+                this.$router.replace({ name: "login" });
+            }
+        },
+        methods: {
+            setAuthenticated(status) {
+                this.authenticated = status;
+            },
+            logout() {
+                this.authenticated = false;
+            }
+        }
+    }
+</script>
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -29,29 +59,5 @@
 
 #nav a.router-link-exact-active {
   color: #427fb9;
-}
-
-
-#tab {
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-#tab td, #tab th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-#tab tr:nth-child(even){background-color: #f2f2f2;}
-
-#tab tr:hover {background-color: rgb(221, 221, 221);}
-
-#tab th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: rgb(76, 119, 175);
-  color: white;
 }
 </style>
